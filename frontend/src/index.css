@@ -1,31 +1,109 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Class-based dark mode (toggled on <html data-theme="dark">). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---- Editorial tokens: light ---- */
+:root,
+[data-theme="light"] {
+  --paper: #f6f1e7;
+  --paper-raised: #fbf7ef;
+  --paper-sunk: #ece4d4;
+  --ink: #1c1917;
+  --ink-muted: #6b6156;
+  --ink-faint: #98907f;
+  --rule: #ddd2bf;
+  --rule-strong: #c9bb9f;
+  --rust: #b3402a;
+  --rust-deep: #8f2f1e;
+  --rust-tint: #f0e0d5;
+  --olive: #5c6b3c;
+  --olive-tint: #e4e8d6;
+  --success: #4c6b3a;
+  --warn: #a8672a;
+  --danger: #b3402a;
+  --surface-chat: #f1ead9;
+}
+
+/* ---- Editorial tokens: dark ---- */
+[data-theme="dark"] {
+  --paper: #1a1612;
+  --paper-raised: #221d17;
+  --paper-sunk: #2c251d;
+  --ink: #ece5d6;
+  --ink-muted: #b7ac9a;
+  --ink-faint: #8b8171;
+  --rule: #3a3228;
+  --rule-strong: #57493a;
+  --rust: #d97a5c;
+  --rust-deep: #e09a80;
+  --rust-tint: #3a251c;
+  --olive: #a9b583;
+  --olive-tint: #262d1e;
+  --success: #9dbb82;
+  --warn: #d9a441;
+  --danger: #e08a72;
+  --surface-chat: #221c15;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rust: var(--rust);
+  --color-rust-deep: var(--rust-deep);
+  --color-rust-tint: var(--rust-tint);
+  --color-olive: var(--olive);
+  --color-olive-tint: var(--olive-tint);
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --color-surface-chat: var(--surface-chat);
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, "Times New Roman",
+    serif;
+  --font-sans:
+    "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar only when needed (overflow) — thin, themed, no reserved gutter. */
+.chat-scroll {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--ink-faint) transparent;
+}
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: var(--ink-faint);
+  border-radius: 9999px;
+}
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-muted);
+}
+
+/* Smooth anchor scrolling on the landing page. */
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* New chat messages fade + slide in. */

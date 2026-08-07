@@ -3,11 +3,21 @@ import type { ChatMessage } from '../lib/types'
 const time = (ts: number) =>
   new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
-export default function ChatBubble({ message }: { message: ChatMessage }) {
+interface ChatBubbleProps {
+  message: ChatMessage
+  /** Hide the avatar + timestamp for consecutive messages from the same speaker. */
+  grouped?: boolean
+}
+
+export default function ChatBubble({ message, grouped }: ChatBubbleProps) {
   const isUser = message.role === 'user'
 
   return (
-    <div className={`animate-message-in flex gap-2.5 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div
+      className={`animate-message-in flex items-end gap-2.5 ${
+        isUser ? 'justify-end' : 'justify-start'
+      }`}
+    >
       {!isUser && (
         <div
           aria-hidden="true"
@@ -24,15 +34,15 @@ export default function ChatBubble({ message }: { message: ChatMessage }) {
         }`}
       >
         <p className="whitespace-pre-wrap">{message.content}</p>
-        <p
-          className={`mt-1.5 text-[11px] leading-none ${
-            isUser
-              ? 'text-indigo-200'
-              : 'text-zinc-400 dark:text-zinc-500'
-          }`}
-        >
-          {time(message.createdAt)}
-        </p>
+        {!grouped && (
+          <p
+            className={`mt-1.5 text-[11px] leading-none ${
+              isUser ? 'text-indigo-200' : 'text-zinc-400 dark:text-zinc-500'
+            }`}
+          >
+            {time(message.createdAt)}
+          </p>
+        )}
       </div>
       {isUser && (
         <div
