@@ -1,0 +1,30 @@
+[
+  {
+    "id": "cand-001",
+    "name": "Aarav Sharma",
+    "member": { "role": "AI Engineer Trainee", "experience": "1 year" },
+    "missions": [
+      { "day": 3, "title": "Python data structures", "passed": true, "attempts": 1 },
+      { "day": 6, "title": "Pandas basics", "passed": false, "attempts": 4 },
+      { "day": 9, "title": "Probability foundations", "skipped": true },
+      { "day": 14, "title": "Classification", "passed": true, "attempts": 2 },
+      { "day": 18, "title": "Backpropagation and training", "passed": true, "attempts": 3 },
+      { "day": 23, "title": "Transformers and attention", "skipped": true },
+      { "day": 27, "title": "Prompt engineering", "passed": true, "attempts": 1 }
+    ],
+    "signals": { "commitDays": 21, "missionsCompleted": 15, "missionsFirstTry": 9 }
+  },
+  {
+    "id": "cand-002",
+    "name": "Meera Iyer",
+    "member": { "role": "Data Analyst", "experience": "2 years" },
+    "missions": [
+      { "day": 6, "title": "Pandas basics", "passed": true, "attempts": 1 },
+      { "day": 11, "title": "Hypothesis testing", "passed": false, "attempts": 5 },
+      { "day": 16, "title": "ML model project", "passed": true, "attempts": 2 },
+      { "day": 19, "title": "Building a neural network", "skipped": true },
+      { "day": 24, "title": "Working with LLMs", "passed": true, "attempts": 2 }
+    ],
+    "signals": { "commitDays": 27, "missionsCompleted": 19, "missionsFirstTry": 12 }
+  }
+]
