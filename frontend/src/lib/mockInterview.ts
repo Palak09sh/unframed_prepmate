@@ -1,25 +1,4 @@
-import type {
-  Candidate,
-  InterviewRequest,
-  InterviewResponse,
-} from './types'
-
-/**
- * Hardcoded sample candidate, matching the candidates.json shape
- * (see docs/00_SHARED_CONTEXT.md §6). Used for Milestone 1 so the UI is
- * demoable without a running backend. Real candidate selection comes later.
- */
-export const SAMPLE_CANDIDATE: Candidate = {
-  member: { role: 'AI Engineer', experience: 2 },
-  missions: [
-    { day: 2, title: 'Day 2 - Prompting Basics', passed: true, attempts: 1 },
-    { day: 5, title: 'Day 5 - RAG Fundamentals', passed: false, attempts: 3 },
-    { day: 8, title: 'Day 8 - Agents', skipped: true },
-    { day: 12, title: 'Day 12 - Evaluation', passed: true, attempts: 1 },
-    { day: 15, title: 'Day 15 - Fine-tuning', passed: false, attempts: 4 },
-  ],
-  signals: { commitDays: 10, missionsCompleted: 3, missionsFirstTry: 2 },
-}
+import type { InterviewRequest, InterviewResponse } from './types'
 
 /** Canned assistant replies, cycled through before the mock interview ends. */
 const MOCK_REPLIES = [
