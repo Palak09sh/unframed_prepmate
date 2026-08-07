@@ -884,3 +884,19 @@ The final solution must
 
 \- Be demo-ready
 
+## Additional Project Documentation
+
+Before starting work, also read:
+
+- docs/00_SHARED_CONTEXT.md
+- Your assigned role prompt:
+    - docs/01_PROMPT_frontend_leader.md
+    - docs/02_PROMPT_agent_core_friend2.md
+    - docs/03_PROMPT_backend_api_radhika.md
+
+If any instruction conflicts, priority is:
+
+1. CLAUDE.md
+2. 00_SHARED_CONTEXT.md
+3. Role Prompt
+
