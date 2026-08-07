@@ -16,7 +16,7 @@ adaptive follow-ups, structured feedback at the end.
 
 ## 2. Stack
 
-- Backend: Node.js + Express
+- Backend:Java 21+ (or project JDK),Spring Boot ,Spring Web ,Spring Validation ,Jackson
 - Frontend: React (Vite)
 - LLM: Claude API (Anthropic SDK) — Haiku for interview turns, same model ok
   for feedback generation
