@@ -3,47 +3,45 @@
 /* Class-based dark mode (toggled on <html data-theme="dark">). */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* ---- Editorial tokens: light ---- */
+/* ---- Minimal monochrome tokens: light ---- */
 :root,
 [data-theme="light"] {
-  --paper: #f6f1e7;
-  --paper-raised: #fbf7ef;
-  --paper-sunk: #ece4d4;
-  --ink: #1c1917;
-  --ink-muted: #6b6156;
-  --ink-faint: #98907f;
-  --rule: #ddd2bf;
-  --rule-strong: #c9bb9f;
-  --rust: #b3402a;
-  --rust-deep: #8f2f1e;
-  --rust-tint: #f0e0d5;
-  --olive: #5c6b3c;
-  --olive-tint: #e4e8d6;
-  --success: #4c6b3a;
-  --warn: #a8672a;
-  --danger: #b3402a;
-  --surface-chat: #f1ead9;
+  --paper: #fafafa;
+  --paper-raised: #ffffff;
+  --paper-sunk: #f1f1f1;
+  --ink: #161616;
+  --ink-muted: #565656;
+  --ink-faint: #9a9a9a;
+  --rule: #e4e4e4;
+  --rule-strong: #c6c6c6;
+  --rust: #161616; /* primary accent = ink */
+  --rust-deep: #000000;
+  --rust-tint: #ededed;
+  --olive: #4c7a40;
+  --olive-tint: #edf2ea;
+  --success: #4c7a40;
+  --warn: #9a6a24;
+  --danger: #a8443d;
 }
 
-/* ---- Editorial tokens: dark ---- */
+/* ---- Minimal monochrome tokens: dark ---- */
 [data-theme="dark"] {
-  --paper: #1a1612;
-  --paper-raised: #221d17;
-  --paper-sunk: #2c251d;
-  --ink: #ece5d6;
-  --ink-muted: #b7ac9a;
-  --ink-faint: #8b8171;
-  --rule: #3a3228;
-  --rule-strong: #57493a;
-  --rust: #d97a5c;
-  --rust-deep: #e09a80;
-  --rust-tint: #3a251c;
-  --olive: #a9b583;
-  --olive-tint: #262d1e;
-  --success: #9dbb82;
-  --warn: #d9a441;
-  --danger: #e08a72;
-  --surface-chat: #221c15;
+  --paper: #0c0c0c;
+  --paper-raised: #151515;
+  --paper-sunk: #1e1e1e;
+  --ink: #f2f2f2;
+  --ink-muted: #a3a3a3;
+  --ink-faint: #6e6e6e;
+  --rule: #2c2c2c;
+  --rule-strong: #464646;
+  --rust: #f2f2f2; /* primary accent = ink (inverted) */
+  --rust-deep: #ffffff;
+  --rust-tint: #232323;
+  --olive: #8fb37f;
+  --olive-tint: #1c241a;
+  --success: #8fb37f;
+  --warn: #d9a95c;
+  --danger: #e08a7a;
 }
 
 @theme inline {

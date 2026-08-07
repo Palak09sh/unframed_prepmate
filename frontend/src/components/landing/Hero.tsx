@@ -1,73 +1,101 @@
 export default function Hero({ onStart }: { onStart: () => void }) {
   return (
-    <section id="top" className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
+    <section
+      id="top"
+      className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-24"
+    >
       <div className="grid items-center gap-12 lg:grid-cols-2">
         <div>
-          <span className="inline-block rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:border-indigo-900 dark:bg-indigo-950 dark:text-indigo-300">
-            Powered by Claude
-          </span>
-          <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-            Practice your technical interview, guided by AI
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-rust">
+            A calmer way to practice
+          </p>
+          <h1 className="mt-5 font-display text-4xl font-medium leading-[1.1] tracking-tight sm:text-5xl">
+            Your technical interview, conducted by an interviewer who reads your
+            history
           </h1>
-          <p className="mt-5 max-w-md text-lg text-zinc-600 dark:text-zinc-400">
-            An AI interviewer probes your actual weak spots — based on your
-            learning history — asks adaptive follow-ups, and delivers structured
-            feedback. No scheduling, no pressure.
+          <div className="mt-6 h-px w-16 bg-rust" />
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-muted">
+            The AI probes your actual weak spots — the missions you skipped or
+            struggled with — asks adaptive follow-ups, and closes with
+            structured feedback. No scheduling, no pressure.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <button
               type="button"
               onClick={onStart}
-              className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+              className="border border-rule-strong bg-rust px-6 py-3 text-sm font-medium text-paper-raised transition-colors hover:bg-rust-deep"
             >
               Start your interview
             </button>
             <a
               href="#how-it-works"
-              className="rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              className="border border-rule px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-paper-sunk"
             >
               How it works
             </a>
           </div>
-          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-zinc-500 dark:text-zinc-400">
-            <li>✓ 8+ questions</li>
-            <li>✓ Adaptive follow-ups</li>
-            <li>✓ Structured feedback</li>
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
+            <li>8+ questions</li>
+            <li>Adaptive follow-ups</li>
+            <li>Structured feedback</li>
           </ul>
         </div>
 
-        {/* Static chat preview */}
+        {/* Static Q&A preview */}
         <div
           aria-hidden="true"
-          className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-lg dark:border-zinc-800 dark:bg-zinc-900"
+          className="border border-rule bg-paper-raised p-6 shadow-[0_1px_0_var(--rule)]"
         >
-          <div className="mb-4 flex items-center gap-2 border-b border-zinc-200 pb-3 dark:border-zinc-800">
-            <div className="flex size-8 items-center justify-center rounded-full bg-indigo-600 text-sm">
-              🎙️
+          <div className="mb-5 flex items-center justify-between border-b border-rule pb-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex size-8 items-center justify-center rounded-full border border-rule-strong bg-rust font-display text-sm font-semibold text-paper-raised">
+                Q
+              </div>
+              <div>
+                <p className="text-sm font-medium">The Interviewer</p>
+                <p className="text-xs text-ink-muted">Live</p>
+              </div>
             </div>
-            <div>
-              <p className="text-sm font-medium">AI Interviewer</p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">Live</p>
-            </div>
+            <span className="text-xs uppercase tracking-[0.14em] text-ink-faint">
+              Transcript
+            </span>
           </div>
-          <div className="space-y-3 text-sm">
-            <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-3 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100">
-              I see you attempted the RAG fundamentals mission a few times.
-              Let&apos;s start there — walk me through a RAG pipeline.
+          <div className="space-y-4 text-sm leading-relaxed">
+            <div className="max-w-[90%]">
+              <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-rust">
+                Q.
+              </p>
+              <div className="border-l-2 border-rule-strong pl-3 text-ink">
+                I see you attempted the RAG fundamentals mission a few times.
+                Let&apos;s start there — walk me through a RAG pipeline.
+              </div>
             </div>
-            <div className="ml-auto max-w-[85%] rounded-2xl rounded-br-sm bg-indigo-600 px-4 py-3 text-white">
-              Sure — you embed and index the docs, then retrieve relevant chunks
-              and pass them to the model with the question.
+            <div className="ml-auto max-w-[90%]">
+              <p className="mb-1 text-right text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted">
+                A.
+              </p>
+              <div className="bg-ink px-3 py-2.5 text-right text-paper-raised">
+                Sure — embed and index the docs, retrieve relevant chunks, pass
+                them to the model with the question.
+              </div>
             </div>
-            <div className="max-w-[85%] rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-3 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100">
-              Good. Now, how would you choose a chunk size for retrieval?
+            <div className="max-w-[90%]">
+              <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-rust">
+                Q.
+              </p>
+              <div className="border-l-2 border-rule-strong pl-3 text-ink">
+                Good. Now, how would you choose a chunk size?
+              </div>
             </div>
-            <div className="ml-auto flex justify-end rounded-2xl rounded-br-sm bg-indigo-600 px-4 py-3 text-white">
-              <span className="flex items-center gap-1.5">
-                <span className="size-1.5 animate-bounce rounded-full bg-white/70 [animation-delay:-0.3s]" />
-                <span className="size-1.5 animate-bounce rounded-full bg-white/70 [animation-delay:-0.15s]" />
-                <span className="size-1.5 animate-bounce rounded-full bg-white/70" />
-              </span>
+            <div className="ml-auto max-w-[90%]">
+              <p className="mb-1 text-right text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted">
+                A.
+              </p>
+              <div className="flex items-center justify-end gap-1.5 bg-ink px-3 py-2.5">
+                <span className="size-1.5 animate-bounce rounded-full bg-paper-raised/70 [animation-delay:-0.3s]" />
+                <span className="size-1.5 animate-bounce rounded-full bg-paper-raised/70 [animation-delay:-0.15s]" />
+                <span className="size-1.5 animate-bounce rounded-full bg-paper-raised/70" />
+              </div>
             </div>
           </div>
         </div>

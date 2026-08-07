@@ -1,18 +1,12 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-start md:justify-between">
+    <footer className="border-t border-rule">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">
         <div>
-          <div className="flex items-center gap-2 font-semibold">
-            <span
-              aria-hidden="true"
-              className="flex size-7 items-center justify-center rounded-full bg-indigo-600 text-sm"
-            >
-              🎙️
-            </span>
-            AI Interview
-          </div>
-          <p className="mt-3 max-w-xs text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="font-display text-xl font-medium tracking-tight">
+            The Interview
+          </p>
+          <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-muted">
             AI-powered technical interview practice with structured, actionable
             feedback.
           </p>
@@ -20,20 +14,22 @@ export default function Footer() {
 
         <nav className="flex gap-16 text-sm">
           <div>
-            <p className="mb-3 font-medium">Product</p>
-            <ul className="space-y-2 text-zinc-500 dark:text-zinc-400">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.14em] text-ink-faint">
+              Product
+            </p>
+            <ul className="space-y-3 text-ink-muted">
               <li>
-                <a href="#features" className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-100">
+                <a href="#features" className="transition-colors hover:text-rust">
                   Features
                 </a>
               </li>
               <li>
-                <a href="#how-it-works" className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-100">
+                <a href="#how-it-works" className="transition-colors hover:text-rust">
                   How it works
                 </a>
               </li>
               <li>
-                <a href="#faq" className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-100">
+                <a href="#faq" className="transition-colors hover:text-rust">
                   FAQ
                 </a>
               </li>
@@ -41,8 +37,8 @@ export default function Footer() {
           </div>
         </nav>
       </div>
-      <div className="border-t border-zinc-200 py-5 text-center text-xs text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
-        Built for the ABTalks Hackathon · Powered by Claude
+      <div className="border-t border-rule py-5 text-center text-xs text-ink-faint">
+        The Interview · Built for the ABTalks Hackathon · Powered by Claude
       </div>
     </footer>
   )

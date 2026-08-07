@@ -18,18 +18,20 @@ export default function CandidatePicker({
   onSelect,
 }: CandidatePickerProps) {
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-6 px-4 py-8">
+    <div className="flex h-full flex-col items-center justify-center gap-8 px-4 py-8">
       <div className="text-center">
-        <div className="mx-auto mb-3 flex size-14 items-center justify-center rounded-full bg-indigo-600 text-3xl">
-          🎙️
-        </div>
-        <h2 className="text-lg font-semibold">Who&apos;s being interviewed?</h2>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-          Pick a candidate to start their interview.
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-rust">
+          Select a candidate
+        </p>
+        <h2 className="mt-2 font-display text-3xl font-medium leading-tight">
+          Who&apos;s being interviewed?
+        </h2>
+        <p className="mt-3 text-sm text-ink-muted">
+          The interviewer will probe this profile&apos;s weakest areas.
         </p>
       </div>
 
-      <div className="grid w-full max-w-md gap-3">
+      <div className="grid w-full max-w-md gap-4">
         {candidates.map((candidate) => {
           const { skipped, struggled } = weakSpots(candidate)
           return (
@@ -37,37 +39,37 @@ export default function CandidatePicker({
               key={`${candidate.member.role}-${candidate.member.experience}`}
               type="button"
               onClick={() => onSelect(candidate)}
-              className="group flex items-center justify-between gap-4 rounded-2xl border border-zinc-200 bg-white p-4 text-left shadow-sm transition-colors hover:border-indigo-500 hover:bg-indigo-50/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-500 dark:hover:bg-indigo-950/30"
+              className="group flex items-center justify-between gap-4 border border-rule bg-paper-raised p-5 text-left transition-colors hover:border-rust hover:bg-rust-tint focus:outline-none focus:ring-2 focus:ring-rust/40"
             >
               <div className="min-w-0">
-                <p className="truncate font-medium">{candidate.member.role}</p>
-                <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="font-display text-lg font-medium">{candidate.member.role}</p>
+                <p className="mt-1 text-xs text-ink-muted">
                   {candidate.member.experience} year
                   {candidate.member.experience === 1 ? '' : 's'} ·{' '}
                   {candidate.signals.missionsCompleted} missions completed ·{' '}
                   {candidate.signals.commitDays} commit days
                 </p>
-                <div className="mt-2 flex flex-wrap gap-1.5">
+                <div className="mt-2.5 flex flex-wrap gap-1.5">
                   {skipped > 0 && (
-                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                    <span className="border border-rule-strong px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">
                       {skipped} skipped
                     </span>
                   )}
                   {struggled > 0 && (
-                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-medium text-red-800 dark:bg-red-950 dark:text-red-300">
+                    <span className="border border-rust px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-rust">
                       {struggled} high-attempt
                     </span>
                   )}
                   {skipped === 0 && struggled === 0 && (
-                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                      balanced profile
+                    <span className="border border-olive px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-olive">
+                      balanced
                     </span>
                   )}
                 </div>
               </div>
               <span
                 aria-hidden="true"
-                className="shrink-0 text-lg text-zinc-300 transition-transform group-hover:translate-x-0.5 group-hover:text-indigo-500"
+                className="shrink-0 font-display text-xl text-ink-faint transition-all group-hover:translate-x-0.5 group-hover:text-rust"
               >
                 →
               </span>

@@ -14,42 +14,47 @@ export default function ChatBubble({ message, grouped }: ChatBubbleProps) {
 
   return (
     <div
-      className={`animate-message-in flex items-end gap-2.5 ${
+      className={`animate-message-in flex items-start gap-3 ${
         isUser ? 'justify-end' : 'justify-start'
       }`}
     >
       {!isUser && (
         <div
           aria-hidden="true"
-          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-sm"
+          className="flex size-8 shrink-0 items-center justify-center rounded-full border border-rule-strong bg-rust font-display text-sm font-semibold text-paper-raised"
         >
-          🎙️
+          Q
         </div>
       )}
-      <div
-        className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-          isUser
-            ? 'rounded-br-sm bg-indigo-600 text-white'
-            : 'rounded-bl-sm bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
-        }`}
-      >
-        <p className="whitespace-pre-wrap">{message.content}</p>
+      <div className={`flex max-w-[80%] flex-col ${isUser ? 'items-end' : 'items-start'}`}>
         {!grouped && (
           <p
-            className={`mt-1.5 text-[11px] leading-none ${
-              isUser ? 'text-indigo-200' : 'text-zinc-400 dark:text-zinc-500'
+            className={`mb-1 text-[11px] font-medium uppercase tracking-[0.14em] ${
+              isUser ? 'text-ink-muted' : 'text-rust'
             }`}
           >
-            {time(message.createdAt)}
+            {isUser ? 'A.' : 'Q.'}
           </p>
+        )}
+        <div
+          className={`px-4 py-3 text-sm leading-relaxed ${
+            isUser
+              ? 'bg-ink text-paper-raised'
+              : 'border border-rule bg-paper-raised text-ink'
+          }`}
+        >
+          <p className="whitespace-pre-wrap">{message.content}</p>
+        </div>
+        {!grouped && (
+          <p className="mt-1 text-[11px] text-ink-faint">{time(message.createdAt)}</p>
         )}
       </div>
       {isUser && (
         <div
           aria-hidden="true"
-          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-zinc-300 text-xs font-semibold text-zinc-700 dark:bg-zinc-700 dark:text-zinc-200"
+          className="flex size-8 shrink-0 items-center justify-center rounded-full border border-rule-strong bg-paper-sunk font-display text-sm font-semibold text-ink"
         >
-          You
+          A
         </div>
       )}
     </div>

@@ -1,21 +1,17 @@
 const features = [
   {
-    icon: '🧠',
     title: 'Adaptive follow-ups',
-    body: 'The interviewer reacts to your actual answers — drilling in where you are vague, not just reading a scripted quiz.',
+    body: 'The interviewer reacts to your actual answers — drilling in where you are vague, not reading a scripted quiz.',
   },
   {
-    icon: '📚',
     title: 'Built on your curriculum',
     body: 'Questions are grounded in what you actually studied, prioritized by your weak spots — skipped missions and high-attempt days.',
   },
   {
-    icon: '📋',
     title: 'Structured feedback',
-    body: 'Get a clear summary, strengths, gaps, and suggested next steps the moment the interview wraps.',
+    body: 'A clear summary, strengths, gaps, and suggested next steps the moment the interview wraps.',
   },
   {
-    icon: '⚡',
     title: 'Instant and unlimited',
     body: 'No scheduling, no waitlists. Start a practice interview anytime and run as many as you like.',
   },
@@ -23,27 +19,19 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50">
+    <section className="border-t border-rule bg-paper-raised/60">
       <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
-        <h2 className="text-3xl font-bold tracking-tight">Why practice here</h2>
-        <p className="mt-3 max-w-2xl text-zinc-600 dark:text-zinc-400">
-          A realistic technical interview that knows your learning history and
-          targets exactly what you need to work on.
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-rust">
+          Why practice here
         </p>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {features.map(({ icon, title, body }) => (
-            <div
-              key={title}
-              className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
-            >
-              <div
-                aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-xl bg-indigo-50 text-xl dark:bg-indigo-950"
-              >
-                {icon}
-              </div>
-              <h3 className="mt-4 font-semibold">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+        <h2 className="mt-3 max-w-2xl font-display text-3xl font-medium leading-tight tracking-tight">
+          An interview that knows what you actually studied
+        </h2>
+        <div className="mt-10 grid gap-px overflow-hidden border border-rule bg-rule sm:grid-cols-2">
+          {features.map(({ title, body }) => (
+            <div key={title} className="bg-paper-raised p-7">
+              <h3 className="font-display text-xl font-medium">{title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                 {body}
               </p>
             </div>

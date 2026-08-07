@@ -3,54 +3,38 @@ import type { Feedback } from '../lib/types'
 const SECTIONS: {
   key: 'strengths' | 'gaps' | 'next'
   title: string
-  icon: string
-  accent: string
-  dot: string
+  color: string
+  marker: string
 }[] = [
-  {
-    key: 'strengths',
-    title: 'Strengths',
-    icon: '✅',
-    accent: 'text-emerald-700 dark:text-emerald-300',
-    dot: 'bg-emerald-500',
-  },
-  {
-    key: 'gaps',
-    title: 'Areas to improve',
-    icon: '🔧',
-    accent: 'text-amber-700 dark:text-amber-300',
-    dot: 'bg-amber-500',
-  },
-  {
-    key: 'next',
-    title: 'Suggested next steps',
-    icon: '🚀',
-    accent: 'text-indigo-700 dark:text-indigo-300',
-    dot: 'bg-indigo-500',
-  },
+  { key: 'strengths', title: 'Strengths', color: 'text-olive', marker: '+' },
+  { key: 'gaps', title: 'Areas to improve', color: 'text-danger', marker: '−' },
+  { key: 'next', title: 'Suggested next steps', color: 'text-ink', marker: '→' },
 ]
 
 export default function FeedbackCard({ feedback }: { feedback: Feedback }) {
   return (
-    <div className="animate-message-in rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="mb-1 flex items-center gap-2">
-        <span className="text-lg">📋</span>
-        <h3 className="text-base font-semibold">Interview feedback</h3>
-      </div>
-      <p className="mb-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+    <div className="animate-message-in border border-rule bg-paper-raised p-6">
+      <p className="text-xs font-medium uppercase tracking-[0.2em] text-rust">
+        Reporter&apos;s notes
+      </p>
+      <h3 className="mt-2 font-display text-2xl font-medium leading-tight">
+        Interview feedback
+      </h3>
+      <p className="mt-4 border-l-2 border-rule-strong pl-4 text-sm leading-relaxed text-ink-muted">
         {feedback.summary}
       </p>
-      <div className="grid gap-5 sm:grid-cols-3">
-        {SECTIONS.map(({ key, title, icon, accent, dot }) => (
+      <div className="mt-8 grid gap-8 sm:grid-cols-3">
+        {SECTIONS.map(({ key, title, color, marker }) => (
           <section key={key}>
-            <h4 className={`mb-2 flex items-center gap-1.5 text-sm font-semibold ${accent}`}>
-              <span aria-hidden="true">{icon}</span>
+            <h4 className={`border-b border-rule pb-2 text-xs font-medium uppercase tracking-[0.14em] ${color}`}>
               {title}
             </h4>
-            <ul className="space-y-1.5">
+            <ul className="mt-3 space-y-2.5">
               {feedback[key].map((item, i) => (
-                <li key={i} className="flex gap-2 text-sm text-zinc-700 dark:text-zinc-300">
-                  <span aria-hidden="true" className={`mt-1.5 size-1.5 shrink-0 rounded-full ${dot}`} />
+                <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-ink-muted">
+                  <span aria-hidden="true" className={`shrink-0 font-display ${color}`}>
+                    {marker}
+                  </span>
                   <span>{item}</span>
                 </li>
               ))}
