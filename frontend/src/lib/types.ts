@@ -51,4 +51,6 @@ export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  /** Epoch ms, set when the message is appended. */
+  createdAt: number;
 }

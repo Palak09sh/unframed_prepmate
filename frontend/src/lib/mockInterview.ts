@@ -62,6 +62,7 @@ export async function mockInterview(
   await new Promise((resolve) => setTimeout(resolve, 700))
 
   const isStart = 'candidate' in req
+  if (isStart) _turn = 0 // a fresh interview restarts from the opening
   const index = isStart ? 0 : Math.min(_turn + 1, MOCK_REPLIES.length - 1)
   if (!isStart) _turn = index
 
