@@ -1,9 +1,18 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# AGENTS.md
 
-# This is NOT the Next.js you know
+This repository follows a **single source of truth**.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+All AI coding agents (Claude Code, Cursor, Codex CLI, Gemini CLI, etc.) must follow the instructions defined in **CLAUDE.md**.
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+Rules:
 
-<!-- END:nextjs-agent-rules -->
+1. Read `CLAUDE.md` completely before making any changes.
+2. Respect ownership boundaries.
+3. Do not modify files owned by another developer.
+4. Never change the REST API contract.
+5. Never introduce a database or authentication unless explicitly requested.
+6. Work incrementally and explain changes after each implementation.
+7. Never commit, push, or create branches.
+8. Keep code modular, readable, and production-ready.
+9. Follow the defined folder structure and public service contracts.
+10. If `CLAUDE.md` and this file ever differ, **`CLAUDE.md` takes precedence**.
