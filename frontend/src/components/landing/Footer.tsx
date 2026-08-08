@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="grid gap-10 px-6 py-14 sm:grid-cols-3 sm:px-10 lg:px-16">
         <div>
           <p className="font-display text-xl font-medium tracking-tight">
-            The Interview
+            PrepMate
           </p>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-muted">
             AI-powered technical interview practice with structured, actionable
@@ -49,8 +49,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-rule px-6 py-5 text-xs text-ink-faint sm:px-10 lg:px-16">
-        <span>The Interview</span>
-        <span>© 2026 · AI Interview Agent</span>
+        <span>PrepMate</span>
+        <span>© 2026 · PrepMate</span>
       </div>
     </footer>
   )

@@ -11,7 +11,7 @@ export default function EmptyState({ candidate }: { candidate: Candidate }) {
         Q
       </div>
       <p className="mt-6 font-display italic text-ink-muted">
-        The interview
+        PrepMate
       </p>
       <h2 className="mt-2 font-display text-2xl font-medium leading-tight tracking-[-0.01em]">
         Your interview is ready

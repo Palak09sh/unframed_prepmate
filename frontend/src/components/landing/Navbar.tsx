@@ -16,7 +16,7 @@ export default function Navbar({ onStart, onDashboard }: NavbarProps) {
     <header className="sticky top-0 z-20 border-b border-rule bg-paper/90 backdrop-blur">
       <nav className="flex h-16 items-center gap-6 px-6 sm:px-10 lg:px-16">
         <a href="#top" className="font-display text-xl font-medium tracking-tight">
-          The Interview
+          PrepMate
         </a>
 
         <div className="ml-auto hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.14em] text-ink-muted md:flex">

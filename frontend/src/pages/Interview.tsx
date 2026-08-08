@@ -234,7 +234,7 @@ export default function Interview({ onExit, onDashboard }: InterviewProps) {
           </div>
           <div className="min-w-0">
             <h1 className="truncate font-display text-base font-medium tracking-tight">
-              The Interview
+              PrepMate
             </h1>
             <p className="truncate text-xs text-ink-muted">
               {candidate

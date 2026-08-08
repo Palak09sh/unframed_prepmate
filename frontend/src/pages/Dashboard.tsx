@@ -50,7 +50,7 @@ export default function Dashboard({ onExit, onStart }: DashboardProps) {
             onClick={onExit}
             className="font-display text-xl font-medium tracking-tight transition-colors hover:text-accent"
           >
-            The Interview
+            PrepMate
           </button>
           <div className="ml-auto flex items-center gap-3">
             <button
