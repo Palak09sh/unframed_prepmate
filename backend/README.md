@@ -18,12 +18,18 @@ Defaults to port `8080` (override with `PORT`). Health check: `GET http://localh
 
 | Variable | Required | Default | Purpose |
 |---|---|---|---|
-| `ANTHROPIC_API_KEY` | yes (LLM features) | — | Claude API key (used by ClaudeService/FeedbackService) |
+| `GEMINI_API_KEY` | yes (AI features) | — | Google AI Studio API key — free tier, **no credit card** (aistudio.google.com) |
 | `PORT` | no | `8080` | Server port (Render injects this) |
 | `FRONTEND_URL` | no | `http://localhost:5173` | Allowed CORS origin(s), comma-separated |
-| `CLAUDE_MODEL` | no | `claude-haiku-4-5-20251001` | Claude model for interview turns / feedback |
+| `GEMINI_MODEL` | no | `gemini-2.5-flash` | Gemini model for interview turns / feedback |
 
 Never commit `.env`. A template lives in `.env.example`.
+
+> **AI provider:** the LLM transport now calls the **Google Gemini API** (free tier).
+> The service class keeps the legacy name `ClaudeService` and its `complete(...)`
+> contract on purpose — the engine, feedback service, config and tests bind to that
+> seam, so a provider swap stays a one-file change. `ClaudeApiException` is retained
+> and still maps to `502`.
 
 ## API contract (fixed — do not change)
 
@@ -64,10 +70,10 @@ Errors return a non-2xx status with `{ "error": "message" }`:
 ## Internal contract (controller ↔ engine)
 
 `InterviewEngine` (owned by Developer 2) returns an `InterviewResponse` whose wire shape is
-exactly the API above. To carry the updated conversation state back to the controller, the
-response also holds a `@JsonIgnore`d `session` field — never serialized. The controller
-persists `response.session()` into `SessionStore` after every call and reads it back for the
-next turn. Do not rely on the passed-in session being mutated by reference.
+exactly the API above. The engine **mutates the passed-in `InterviewSession` in place** across
+turns (tracking target/asked days, question count and phase); the controller persists that same
+session into `SessionStore` after every call and reads it back for the next turn. The response
+carries no session on the wire (`feedback` is `null` except on completion).
 
 - `InterviewResponse startInterview(Candidate candidate)` → opening reply + initial session
 - `InterviewResponse processTurn(InterviewSession session, String message)` → next reply,
@@ -82,6 +88,9 @@ next turn. Do not rely on the passed-in session being mutated by reference.
 
 ## Current state
 
-Milestone 1 (scaffold + session store + controller + wiring). `InterviewEngine` is a
-**temporary deterministic stub** owned by Developer 2; `FeedbackService` returns a placeholder
-until Milestone 3. See `CLAUDE.md` and the root `README.md` for the roadmap.
+Interview flow, in-memory sessions, and structured feedback are implemented and tested
+(`mvn clean test`). `InterviewEngine` (Developer 2) drives 8+ questions across 4+ curriculum
+days with adaptive follow-ups; `FeedbackService` (Radhika) generates `{summary, strengths,
+gaps, next}` from the transcript via Gemini, with a safe fallback when the AI call fails.
+Remaining backend work: deployment config (Render/Dockerfile) and live AI verification with a
+`GEMINI_API_KEY`. See `CLAUDE.md` and the root `README.md` for the roadmap.

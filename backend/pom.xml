@@ -31,12 +31,8 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- Official Anthropic Claude API SDK (used by ClaudeService) -->
-        <dependency>
-            <groupId>com.anthropic</groupId>
-            <artifactId>anthropic-java</artifactId>
-            <version>2.34.0</version>
-        </dependency>
+        <!-- AI transport is the Google Gemini REST API, called via Spring's built-in
+             RestClient (spring-web). No external AI SDK dependency is required. -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
