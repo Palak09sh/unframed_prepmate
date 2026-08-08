@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (toggled on <html data-theme="dark">). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---- Minimal monochrome tokens: light ---- */
+:root,
+[data-theme="light"] {
+  --paper: #fafafa;
+  --paper-raised: #ffffff;
+  --paper-sunk: #f1f1f1;
+  --ink: #161616;
+  --ink-muted: #565656;
+  --ink-faint: #9a9a9a;
+  --rule: #e4e4e4;
+  --rule-strong: #c6c6c6;
+  --rust: #161616; /* primary accent = ink */
+  --rust-deep: #000000;
+  --rust-tint: #ededed;
+  --olive: #4c7a40;
+  --olive-tint: #edf2ea;
+  --success: #4c7a40;
+  --warn: #9a6a24;
+  --danger: #a8443d;
+}
+
+/* ---- Minimal monochrome tokens: dark ---- */
+[data-theme="dark"] {
+  --paper: #0c0c0c;
+  --paper-raised: #151515;
+  --paper-sunk: #1e1e1e;
+  --ink: #f2f2f2;
+  --ink-muted: #a3a3a3;
+  --ink-faint: #6e6e6e;
+  --rule: #2c2c2c;
+  --rule-strong: #464646;
+  --rust: #f2f2f2; /* primary accent = ink (inverted) */
+  --rust-deep: #ffffff;
+  --rust-tint: #232323;
+  --olive: #8fb37f;
+  --olive-tint: #1c241a;
+  --success: #8fb37f;
+  --warn: #d9a95c;
+  --danger: #e08a7a;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rust: var(--rust);
+  --color-rust-deep: var(--rust-deep);
+  --color-rust-tint: var(--rust-tint);
+  --color-olive: var(--olive);
+  --color-olive-tint: var(--olive-tint);
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --color-surface-chat: var(--surface-chat);
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, "Times New Roman",
+    serif;
+  --font-sans:
+    "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar only when needed (overflow) — thin, themed, no reserved gutter. */
+.chat-scroll {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--ink-faint) transparent;
+}
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: var(--ink-faint);
+  border-radius: 9999px;
+}
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-muted);
+}
+
+/* Smooth anchor scrolling on the landing page. */
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* New chat messages fade + slide in. */
+@keyframes message-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-message-in {
+  animation: message-in 0.22s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-message-in {
+    animation: none;
+  }
+}
