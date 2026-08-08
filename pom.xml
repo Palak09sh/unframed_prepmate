@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Aggregator so Maven works from the repository root. The single real
+         Maven module is backend/ (the Spring Boot app); its own pom.xml stays
+         authoritative for the app's build, Spring Boot version, and Java
+         version. Run the app with `mvn -pl backend spring-boot:run`. -->
+    <groupId>com.hackathon</groupId>
+    <artifactId>ai-interview-agent</artifactId>
+    <version>0.1.0</version>
+    <packaging>pom</packaging>
+    <name>ai-interview-agent</name>
+    <description>AI Interview Agent - monorepo Maven aggregator (single module: backend)</description>
+
+    <modules>
+        <module>backend</module>
+    </modules>
+</project>

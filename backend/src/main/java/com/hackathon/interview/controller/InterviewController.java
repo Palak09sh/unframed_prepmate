@@ -62,11 +62,14 @@ public class InterviewController {
         InterviewSession session = sessionStore.getSession(request.sessionId())
                 .orElseThrow(() -> new SessionNotFoundException(request.sessionId()));
 
+        // The engine mutates `session` in place and returns a turn whose session field is
+        // intentionally null (the route already holds the session). Persist the same object
+        // so the next turn sees the updated conversation state.
         InterviewResponse turn = interviewEngine.processTurn(session, request.message());
-        sessionStore.updateSession(request.sessionId(), turn.session());
+        sessionStore.updateSession(request.sessionId(), session);
 
         if (turn.done()) {
-            Feedback feedback = feedbackService.generateFeedback(turn.session());
+            Feedback feedback = feedbackService.generateFeedback(session);
             return new InterviewResponse(COMPLETION_REPLY, true, feedback, null);
         }
         return turn;
