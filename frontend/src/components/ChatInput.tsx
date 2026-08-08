@@ -50,12 +50,12 @@ export default function ChatInput({ disabled, onSubmit }: ChatInputProps) {
         disabled={disabled}
         placeholder="Type your answer… (Enter to send)"
         aria-label="Your answer"
-        className="max-h-40 min-h-11 flex-1 resize-none border border-rule bg-paper-raised px-4 py-3 text-sm leading-relaxed text-ink outline-none placeholder:text-ink-faint focus:border-rust focus:ring-2 focus:ring-rust/20 disabled:opacity-50"
+        className="max-h-40 min-h-11 flex-1 resize-none border border-rule bg-paper-raised px-4 py-3 text-sm leading-relaxed text-ink outline-none placeholder:text-ink-faint focus:border-accent focus:ring-2 focus:ring-accent/20 disabled:opacity-50"
       />
       <button
         type="submit"
         disabled={disabled || !value.trim()}
-        className="h-11 shrink-0 border border-rule-strong bg-rust px-5 text-sm font-medium text-paper-raised transition-colors hover:bg-rust-deep disabled:cursor-not-allowed disabled:opacity-50"
+        className="h-11 shrink-0 bg-accent px-5 text-sm font-medium text-paper-raised transition-colors hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-50"
       >
         Send
       </button>

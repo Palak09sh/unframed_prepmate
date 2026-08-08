@@ -23,42 +23,48 @@ const faqs = [
 
 export default function Faq() {
   return (
-    <section
-      id="faq"
-      className="border-t border-rule bg-paper-raised/60"
-    >
-      <div className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-rust">
-          Questions &amp; answers
-        </p>
-        <h2 className="mt-3 font-display text-3xl font-medium tracking-tight">
-          Frequently asked
-        </h2>
-        <div className="mt-10">
-          {faqs.map(({ q, a }, i) => (
-            <details
-              key={q}
-              className="group border-b border-rule first:border-t"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-medium [&::-webkit-details-marker]:hidden">
-                <span className="flex gap-4">
-                  <span className="font-display text-sm italic text-rust">
-                    {String(i + 1).padStart(2, '0')}
+    <section id="faq" className="border-b border-rule">
+      <div className="grid lg:grid-cols-12">
+        <div className="px-6 py-16 sm:px-10 sm:py-24 lg:col-span-4 lg:border-r lg:px-16">
+          <p className="font-display italic text-ink-muted">
+            Questions &amp; answers
+          </p>
+          <h2 className="mt-4 font-display text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
+            Frequently asked
+          </h2>
+          <p className="mt-6 max-w-md text-sm leading-relaxed text-ink-muted">
+            Everything candidates usually ask before starting their first
+            practice interview.
+          </p>
+        </div>
+
+        <div className="px-6 py-16 sm:px-10 sm:py-24 lg:col-span-8 lg:px-14">
+          <div>
+            {faqs.map(({ q, a }, i) => (
+              <details
+                key={q}
+                className="group border-b border-rule first:border-t"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-medium [&::-webkit-details-marker]:hidden">
+                  <span className="flex gap-4">
+                    <span className="font-display text-sm italic text-accent">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span>{q}</span>
                   </span>
-                  <span>{q}</span>
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="shrink-0 text-ink-faint transition-transform group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="pb-6 pl-8 text-sm leading-relaxed text-ink-muted">
-                {a}
-              </p>
-            </details>
-          ))}
+                  <span
+                    aria-hidden="true"
+                    className="shrink-0 text-ink-faint transition-transform group-open:rotate-45"
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="pb-6 pl-8 text-sm leading-relaxed text-ink-muted">
+                  {a}
+                </p>
+              </details>
+            ))}
+          </div>
         </div>
       </div>
     </section>

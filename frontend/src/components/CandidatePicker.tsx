@@ -18,20 +18,18 @@ export default function CandidatePicker({
   onSelect,
 }: CandidatePickerProps) {
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-8 px-4 py-8">
-      <div className="text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-rust">
-          Select a candidate
-        </p>
-        <h2 className="mt-2 font-display text-3xl font-medium leading-tight">
-          Who&apos;s being interviewed?
-        </h2>
-        <p className="mt-3 text-sm text-ink-muted">
-          The interviewer will probe this profile&apos;s weakest areas.
-        </p>
-      </div>
+    <div className="flex flex-col justify-center py-6">
+      <p className="font-display italic text-ink-muted">
+        Select a candidate
+      </p>
+      <h2 className="mt-3 font-display text-3xl font-medium leading-tight tracking-[-0.02em]">
+        Who&apos;s being interviewed?
+      </h2>
+      <p className="mt-3 text-sm text-ink-muted">
+        The interviewer will probe this profile&apos;s weakest areas.
+      </p>
 
-      <div className="grid w-full max-w-md gap-4">
+      <div className="mt-10 border-t border-rule">
         {candidates.map((candidate) => {
           const { skipped, struggled } = weakSpots(candidate)
           return (
@@ -39,24 +37,26 @@ export default function CandidatePicker({
               key={`${candidate.member.role}-${candidate.member.experience}`}
               type="button"
               onClick={() => onSelect(candidate)}
-              className="group flex items-center justify-between gap-4 border border-rule bg-paper-raised p-5 text-left transition-colors hover:border-rust hover:bg-rust-tint focus:outline-none focus:ring-2 focus:ring-rust/40"
+              className="group flex w-full items-center justify-between gap-6 border-b border-rule py-6 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
             >
               <div className="min-w-0">
-                <p className="font-display text-lg font-medium">{candidate.member.role}</p>
-                <p className="mt-1 text-xs text-ink-muted">
+                <p className="font-display text-xl font-medium">
+                  {candidate.member.role}
+                </p>
+                <p className="mt-1 text-sm text-ink-muted">
                   {candidate.member.experience} year
                   {candidate.member.experience === 1 ? '' : 's'} ·{' '}
                   {candidate.signals.missionsCompleted} missions completed ·{' '}
                   {candidate.signals.commitDays} commit days
                 </p>
-                <div className="mt-2.5 flex flex-wrap gap-1.5">
+                <div className="mt-3 flex flex-wrap gap-2">
                   {skipped > 0 && (
                     <span className="border border-rule-strong px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">
                       {skipped} skipped
                     </span>
                   )}
                   {struggled > 0 && (
-                    <span className="border border-rust px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-rust">
+                    <span className="border border-accent px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-accent">
                       {struggled} high-attempt
                     </span>
                   )}
@@ -67,11 +67,8 @@ export default function CandidatePicker({
                   )}
                 </div>
               </div>
-              <span
-                aria-hidden="true"
-                className="shrink-0 font-display text-xl text-ink-faint transition-all group-hover:translate-x-0.5 group-hover:text-rust"
-              >
-                →
+              <span className="shrink-0 text-sm font-medium text-ink-muted transition-colors group-hover:text-accent">
+                Select
               </span>
             </button>
           )

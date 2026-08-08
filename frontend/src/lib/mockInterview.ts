@@ -27,10 +27,10 @@ const MOCK_FEEDBACK = {
 }
 
 /**
- * Mock interview engine for Milestone 1. Implements the same request/response
- * contract as the real backend so the UI can be swapped to postInterview()
- * without changes. Uses a module-level counter to walk through the canned
- * replies; the last reply marks the interview done and returns mock feedback.
+ * Offline mock interview engine (VITE_USE_MOCK=1). Implements the same
+ * request/response contract as the real backend so the UI is identical either
+ * way. Uses a module-level counter to walk through the canned replies; the
+ * last reply marks the interview done and returns mock feedback.
  */
 let _turn = 0
 
