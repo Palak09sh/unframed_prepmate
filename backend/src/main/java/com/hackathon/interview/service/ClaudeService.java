@@ -8,6 +8,7 @@ import com.anthropic.models.messages.MessageCreateParams;
 import com.hackathon.interview.model.ChatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,17 +24,42 @@ import java.util.stream.Collectors;
  * {@code FeedbackService} uses it for structured feedback.</p>
  *
  * <p>SDK: {@code com.anthropic:anthropic-java} (official Anthropic Java SDK).</p>
+ *
+ * <p>Two constructor shapes exist so the Agent Core can stay Spring-free while the
+ * service stays a Spring bean:</p>
+ * <ul>
+ *   <li>The {@code @Autowired} config constructor binds {@code application.yml}
+ *       ({@code app.claude.*}) and is what Spring uses at runtime.</li>
+ *   <li>The no-arg constructor exists only for test stand-ins
+ *       ({@code FakeClaudeService} / {@code ThrowingClaudeService}) that subclass
+ *       this service and override {@link #complete(String, List)} — they never
+ *       touch the client or the API.</li>
+ * </ul>
  */
 @Service
 public class ClaudeService {
 
     private static final Logger log = LoggerFactory.getLogger(ClaudeService.class);
 
+    private static final String DEFAULT_MODEL = "claude-haiku-4-5-20251001";
+
     private final AnthropicClient client;
     private final String model;
     private final long maxTokens;
     private final double temperature;
 
+    /**
+     * Test-only constructor (no Spring config): reads the same env vars the config
+     * constructor is bound to. Subclasses override {@link #complete(String, List)},
+     * so no API key or client is actually exercised.
+     */
+    public ClaudeService() {
+        this(System.getenv("ANTHROPIC_API_KEY"),
+                System.getenv("CLAUDE_MODEL") != null ? System.getenv("CLAUDE_MODEL") : DEFAULT_MODEL,
+                1024, 0.7);
+    }
+
+    @Autowired
     public ClaudeService(
             @Value("${app.claude.api-key}") String apiKey,
             @Value("${app.claude.model}") String model,
@@ -50,6 +76,19 @@ public class ClaudeService {
         } else {
             this.client = AnthropicOkHttpClient.builder().apiKey(apiKey).build();
         }
+    }
+
+    /**
+     * Compatibility entry point used by the InterviewEngine (Agent Core).
+     * Delegates to {@link #sendMessage(String, List)}.
+     *
+     * @param systemPrompt role/persona instructions; may be {@code null} or blank
+     * @param history      conversation so far, alternating user/assistant
+     * @return the assistant's reply text
+     * @throws ClaudeApiException if the API call fails (mapped to 502 by the global handler)
+     */
+    public String complete(String systemPrompt, List<ChatMessage> history) {
+        return sendMessage(systemPrompt, history);
     }
 
     /**

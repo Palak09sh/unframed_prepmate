@@ -22,4 +22,9 @@ public record InterviewResponse(
         boolean done,
         Feedback feedback,
         @JsonIgnore InterviewSession session
-) {}
+) {
+    /** Builds a response that carries no session (used for processTurn turns). */
+    public static InterviewResponse turn(String reply, boolean done) {
+        return new InterviewResponse(reply, done, null, null);
+    }
+}
