@@ -16,34 +16,49 @@ adaptive follow-ups, structured feedback at the end.
 
 ## 2. Stack
 
-- Backend: Node.js + Express
+- Backend: **Java 17 + Spring Boot 3** (Spring Web), Maven
 - Frontend: React (Vite)
-- LLM: Claude API (Anthropic SDK) — Haiku for interview turns, same model ok
-  for feedback generation
-- Session storage: in-memory `Map`, NOT a database
-- **Deployment: Render or Railway (long-running server), NOT Vercel serverless
-  functions.** Serverless = new instance per request = in-memory session
-  state gets wiped between calls = interview breaks after message 1. This is
-  non-negotiable for this architecture.
+- LLM: Claude API (Anthropic) — called via Spring's `RestClient`/`WebClient`
+  with raw HTTP (there's no official Anthropic Java SDK, so this is a plain
+  REST call to `api.anthropic.com`). Use Haiku for interview turns, same/
+  stronger model ok for feedback generation.
+- Session storage: in-memory store — a `ConcurrentHashMap<String,
+  InterviewSession>` wrapped in a `@Service` singleton bean. No database.
+- **Deployment: Render or Railway (a real running JVM process), NOT a
+  serverless platform.** Serverless = new instance per request = in-memory
+  session state wiped between calls = interview breaks after message 1.
+  This is non-negotiable for this architecture. Note: JVM cold starts are
+  slower than Node's — if using Render free tier, expect a slow first
+  request after idle; mention this in the README so judges aren't confused.
+
+**Important — this changes the earlier Node.js plan:** since Radhika's
+route/session/feedback code and Friend2's interview-engine code now live in
+the *same Spring Boot app* (not separate JS modules), Friend2's part is
+also written in Java, as a Spring `@Service` bean — not a standalone JS
+file. Same logical split of ownership, different implementation language.
 
 ## 3. Repo structure
 
 ```
-/frontend                              → Leader owns this entirely
-/backend
-  /src
-    /routes/interview.route.js         → Radhika owns
-    /services/interviewEngine.js       → Friend2 owns (the agent core)
-    /services/feedback.js              → Radhika owns
-    /sessions/sessionStore.js          → Radhika owns
-  /data/curriculum.json
-  server.js
+/frontend                                          → Leader owns this entirely
+/backend  (single Maven Spring Boot project)
+  /src/main/java/com/abtalks/interview
+    /controller/InterviewController.java            → Radhika owns
+    /service/InterviewEngineService.java             → Friend2 owns (the agent core)
+    /service/FeedbackService.java                    → Radhika owns
+    /session/SessionStore.java                       → Radhika owns
+    /model/InterviewSession.java                     → shared model, agree together before editing
+    /model/Candidate.java, CurriculumDay.java, etc.  → shared models
+  /src/main/resources/curriculum.json
+  /src/main/resources/application.properties
+  pom.xml
 PROMPTS.md
 README.md
 ```
 
-**Rule: don't edit files outside your own list above.** If you need a change
-in someone else's file, ask them — don't just edit it.
+**Rule: don't edit files outside your own list above.** If you need a
+change in someone else's file (including shared `/model` classes), ask them
+— don't just edit it.
 
 ## 4. The API (per technical-spec.md — fixed, don't change)
 
@@ -72,97 +87,99 @@ Response: {
 }
 ```
 
-## 5. Internal contract between Friend2 (engine) and Radhika (route)
+## 5. Internal contract between Friend2 (engine) and Radhika (controller)
 
 This is the interface both of you must implement exactly — agree on any
 change together before touching it.
 
-**`interviewEngine.js` exports:**
+**`InterviewEngineService` (Friend2) — interface both of you agree on:**
 
-```js
-// Called once, on the very first request for a sessionId.
-// Picks 4+ target curriculum days (prioritize days with high attempts
-// or "skipped": true in the candidate's missions — those are the weak
-// spots worth probing), builds the system prompt, returns the opening
-// question.
-function startInterview(candidate) {
-  // returns:
-  return {
-    state: {
-      candidate,
-      targetDays: [/* >=4 day numbers, chosen deliberately */],
-      askedDays: [],
-      history: [{ role: "assistant", content: "<opening question>" }],
-      questionCount: 1,
-      phase: "interviewing", // or "done"
-    },
-    reply: "<opening question text>",
-  };
+```java
+public interface InterviewEngineService {
+
+    // Called once, on the very first request for a sessionId.
+    // Picks 4+ target curriculum days (prioritize days where the
+    // candidate's mission has high `attempts` (3+) or `skipped: true` in
+    // candidates.json — those are the weak spots worth probing). Cross-
+    // reference curriculum.json for each day's title/objectives/tools to
+    // ground the question. Builds the system prompt, generates the
+    // opening question.
+    StartResult startInterview(Candidate candidate);
+
+    // Called on every subsequent turn. Decides: ask a follow-up on the
+    // current day, move to the next target day, or wrap up.
+    // Wrap up ONLY once questionCount >= 8 AND askedDays.size() >= 4 —
+    // enforce this with an explicit check in code, don't rely on the LLM
+    // to count correctly.
+    TurnResult processTurn(InterviewSession session, String candidateMessage);
 }
 
-// Called on every subsequent turn.
-// Decides: ask a follow-up on the same day, move to the next target day,
-// or wrap up (once questionCount >= 8 AND askedDays.length >= 4).
-function processTurn(state, candidateMessage) {
-  // returns:
-  return {
-    state: { ...updatedState },
-    reply: "<next question, or closing line if done>",
-    done: false, // true only when interview should end
-  };
+// returned from startInterview
+record StartResult(InterviewSession session, String reply) {}
+
+// returned from processTurn
+record TurnResult(InterviewSession session, String reply, boolean done) {}
+```
+
+**`InterviewSession` (shared model — agree before editing):**
+
+```java
+public class InterviewSession {
+    Candidate candidate;
+    List<Integer> targetDays;   // >=4 day numbers, chosen deliberately
+    List<Integer> askedDays;
+    List<Message> history;      // {role: "user"|"assistant", content}
+    int questionCount;
+    String phase;               // "interviewing" or "done"
+}
+```
+
+**`FeedbackService` (Radhika):**
+
+```java
+public interface FeedbackService {
+    // Called once, when processTurn returns done = true.
+    Feedback generateFeedback(InterviewSession session);
 }
 
-module.exports = { startInterview, processTurn };
+record Feedback(String summary, List<String> strengths,
+                 List<String> gaps, List<String> next) {}
 ```
 
-**Enforce the 8-question / 4-day minimum in code, not by trusting the LLM
-to count correctly.**
+**`SessionStore` (Radhika):**
 
-**`feedback.js` exports:**
-
-```js
-// Called once, when processTurn returns done: true.
-// Takes the full state (history + candidate) and produces structured feedback.
-async function generateFeedback(state) {
-  return {
-    summary: "string",
-    strengths: ["..."],
-    gaps: ["..."],
-    next: ["..."],
-  };
+```java
+public interface SessionStore {
+    void createSession(String sessionId, InterviewSession session);
+    InterviewSession getSession(String sessionId); // null/Optional if not found
+    void updateSession(String sessionId, InterviewSession session);
 }
-
-module.exports = { generateFeedback };
 ```
 
-**`sessionStore.js` exports:**
-
-```js
-function createSession(sessionId, state) {}
-function getSession(sessionId) {} // returns state or undefined
-function updateSession(sessionId, newState) {}
-
-module.exports = { createSession, getSession, updateSession };
-```
-
-**`interview.route.js` logic (Radhika):**
+**`InterviewController` (Radhika) — request flow:**
 
 ```
 POST /api/interview
   if body has "candidate" (first call):
-      { state, reply } = interviewEngine.startInterview(candidate)
-      sessionStore.createSession(sessionId, state)
-      respond { reply, done: false }
+      StartResult r = engineService.startInterview(candidate)
+      sessionStore.createSession(sessionId, r.session())
+      respond { reply: r.reply(), done: false }
   else (has "message"):
-      state = sessionStore.getSession(sessionId)
-      { state: updatedState, reply, done } = interviewEngine.processTurn(state, message)
-      sessionStore.updateSession(sessionId, updatedState)
-      if done:
-          feedback = await feedback.generateFeedback(updatedState)
-          respond { reply, done: true, feedback }
+      InterviewSession session = sessionStore.getSession(sessionId)
+      // validate: 404/400 if session not found
+      TurnResult r = engineService.processTurn(session, message)
+      sessionStore.updateSession(sessionId, r.session())
+      if r.done():
+          Feedback feedback = feedbackService.generateFeedback(r.session())
+          respond { reply: r.reply(), done: true, feedback }
       else:
-          respond { reply, done: false }
+          respond { reply: r.reply(), done: false }
 ```
+
+Validate the request body (missing `sessionId`, missing both `candidate`
+and `message`, unknown `sessionId` on a follow-up call) and return
+sensible 400s with `@ControllerAdvice`/clear error responses — don't let
+it throw an unhandled 500.
 
 ## 6. Data shapes we already have
 
@@ -171,14 +188,15 @@ POST /api/interview
 - `candidates.json` — each candidate has `member` (role, experience),
   `missions` (array of `{day, title, passed, attempts}` or `{day, title,
   skipped: true}`), and `signals` (commitDays, missionsCompleted,
-  missionsFirstTry).
+  missionsFirstTry). Map these to Java records/POJOs via Jackson.
 
 Weak-spot signal: high `attempts` (3+) or `skipped: true` on a mission = good
 candidate for a probing follow-up question.
 
 ## 7. Checkpoints (commit manually, don't let Claude Code commit)
 
-1. Project setup + folder structure + interfaces locked
+1. Project setup (Maven, folder structure, shared model classes) +
+   interfaces locked
 2. Interview engine: basic Q&A working end-to-end (no follow-up logic yet)
 3. Follow-up logic + day-coverage enforcement
 4. Feedback generation + full flow tested
