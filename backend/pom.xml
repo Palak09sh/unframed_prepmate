@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  NOTE (ownership): this is a MINIMAL build manifest so the InterviewEngine
+  (friend2's module) compiles and is unit-testable until Radhika pushes the
+  real backend. Radhika owns build/config/deployment — reconcile/overwrite this
+  file freely with her version on merge. Java version pinned to 17 to match the
+  local toolchain; CLAUDE.md allows "Java 21+ (or project JDK)".
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.hackathon</groupId>
+    <artifactId>interview-backend</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>interview-backend</name>
+    <description>AI Interview Agent backend</description>
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- Web + Jackson: InterviewEngine itself is Spring-free (compiles with
+             plain javac), but the app is Spring Boot per CLAUDE.md. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- JUnit 5 + AssertJ for InterviewEngineTest. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,75 @@
+{
+  "modules": [
+    {
+      "name": "Foundations",
+      "days": [
+        { "day": 1, "title": "HTML & CSS", "type": "practice", "tools": ["HTML", "CSS", "DevTools"], "objectives": ["Structure semantic HTML documents", "Style pages with CSS layout and spacing", "Build responsive, accessible layouts"] },
+        { "day": 2, "title": "Prompting Basics", "type": "practice", "tools": ["Claude", "prompt templates"], "objectives": ["Write clear, specific prompts", "Structure prompts with role, context, and constraints", "Iterate on prompts based on model output"] },
+        { "day": 3, "title": "JavaScript", "type": "practice", "tools": ["JavaScript", "Node", "DevTools"], "objectives": ["Use core language features: variables, functions, control flow", "Manipulate the DOM and handle events", "Debug with console and breakpoints"] },
+        { "day": 4, "title": "Data Cleaning", "type": "practice", "tools": ["Pandas", "Jupyter"], "objectives": ["Load and inspect messy datasets", "Handle missing values and outliers", "Normalize and validate data"] }
+      ]
+    },
+    {
+      "name": "AI Fundamentals",
+      "days": [
+        { "day": 5, "title": "RAG Fundamentals", "type": "lesson", "tools": ["Claude", "embeddings", "vector stores"], "objectives": ["Explain the retrieval-augmented generation flow", "Describe chunking, embeddings, and retrieval", "Recognize when RAG beats plain prompting"] },
+        { "day": 6, "title": "Accessibility", "type": "practice", "tools": ["axe", "screen readers", "ARIA"], "objectives": ["Apply semantic HTML and ARIA roles", "Test with keyboard navigation and screen readers", "Fix contrast and focus issues"] },
+        { "day": 7, "title": "Statistics", "type": "practice", "tools": ["Python", "scipy", "statsmodels"], "objectives": ["Describe distributions and summary statistics", "Apply hypothesis testing and confidence intervals", "Interpret correlation versus causation"] },
+        { "day": 8, "title": "Agents", "type": "lesson", "tools": ["Claude", "tools", "orchestration"], "objectives": ["Define agent loops: plan, act, observe", "Describe tool use and guardrails", "Compare single-turn LLM calls with multi-step agents"] }
+      ]
+    },
+    {
+      "name": "Applied ML",
+      "days": [
+        { "day": 9, "title": "Performance", "type": "practice", "tools": ["Lighthouse", "React", "CDN"], "objectives": ["Measure web performance metrics", "Optimize rendering and asset loading", "Use caching and CDNs effectively"] },
+        { "day": 10, "title": "APIs & Integration", "type": "practice", "tools": ["REST", "JSON", "Postman"], "objectives": ["Design REST endpoints and status codes", "Handle errors and pagination", "Integrate external APIs securely"] },
+        { "day": 11, "title": "Modeling", "type": "practice", "tools": ["scikit-learn", "XGBoost"], "objectives": ["Train and evaluate classification models", "Handle train/test splits and cross-validation", "Tune hyperparameters without overfitting"] },
+        { "day": 12, "title": "Evaluation", "type": "lesson", "tools": ["evals", "Claude", "metrics"], "objectives": ["Design LLM evaluation datasets", "Measure accuracy, faithfulness, and coherence", "Build regression tests for prompts"] }
+      ]
+    },
+    {
+      "name": "Production",
+      "days": [
+        { "day": 13, "title": "MLOps", "type": "practice", "tools": ["Docker", "CI/CD", "MLflow"], "objectives": ["Package and version models", "Automate training pipelines", "Deploy and monitor models"] },
+        { "day": 14, "title": "Testing", "type": "practice", "tools": ["Jest", "Vitest", "Playwright"], "objectives": ["Write unit and integration tests", "Test UI with end-to-end tools", "Use test-driven development for critical paths"] },
+        { "day": 15, "title": "Fine-tuning", "type": "lesson", "tools": ["Claude", "fine-tuning", "datasets"], "objectives": ["Explain when fine-tuning beats prompting", "Prepare a fine-tuning dataset", "Evaluate fine-tuned model quality"] },
+        { "day": 16, "title": "Storytelling", "type": "practice", "tools": ["notebooks", "dashboards", "slide decks"], "objectives": ["Structure a data narrative", "Choose the right visualization", "Present findings to non-technical audiences"] }
+      ]
+    },
+    {
+      "name": "Advanced AI Patterns",
+      "days": [
+        { "day": 17, "title": "Agent Orchestration", "type": "project", "tools": ["Claude", "multi-agent", "queues"], "objectives": ["Coordinate multiple agents", "Handle failure and retry", "Manage context across steps"] },
+        { "day": 18, "title": "Vector Databases", "type": "practice", "tools": ["ChromaDB", "embeddings"], "objectives": ["Index and query embeddings", "Choose similarity metrics", "Combine filters with semantic search"] },
+        { "day": 19, "title": "Prompt Caching & Cost", "type": "lesson", "tools": ["Claude", "caching"], "objectives": ["Explain prompt caching", "Estimate and reduce token costs", "Apply caching to multi-turn applications"] },
+        { "day": 20, "title": "Multimodal Inputs", "type": "practice", "tools": ["Claude", "vision", "OCR"], "objectives": ["Process images and documents", "Design multimodal prompts", "Evaluate accuracy on mixed inputs"] }
+      ]
+    },
+    {
+      "name": "Data Engineering",
+      "days": [
+        { "day": 21, "title": "Data Pipelines", "type": "project", "tools": ["Airflow", "dbt", "SQL"], "objectives": ["Build scheduled data pipelines", "Model data with SQL and dbt", "Monitor pipeline health"] },
+        { "day": 22, "title": "Feature Stores", "type": "lesson", "tools": ["Feast", "feature pipelines"], "objectives": ["Define online versus offline features", "Ensure train/serve consistency", "Version and share features"] },
+        { "day": 23, "title": "Bias & Fairness", "type": "practice", "tools": ["audits", "metrics"], "objectives": ["Detect bias in datasets and models", "Apply fairness metrics", "Document model limitations"] },
+        { "day": 24, "title": "Synthetic Data", "type": "practice", "tools": ["generators", "evaluation"], "objectives": ["Generate realistic synthetic data", "Validate synthetic versus real distribution", "Use synthetic data responsibly"] }
+      ]
+    },
+    {
+      "name": "Systems & Ops",
+      "days": [
+        { "day": 25, "title": "CI/CD for ML", "type": "project", "tools": ["GitHub Actions", "testing"], "objectives": ["Automate test and deploy pipelines", "Gate model releases on quality", "Roll back safely"] },
+        { "day": 26, "title": "Monitoring & Logging", "type": "practice", "tools": ["Grafana", "Prometheus"], "objectives": ["Track model drift and latency", "Set alerting thresholds", "Debug with structured logs"] },
+        { "day": 27, "title": "Model Registry", "type": "practice", "tools": ["MLflow", "versioning"], "objectives": ["Register and compare model versions", "Promote models across stages", "Reproduce results"] },
+        { "day": 28, "title": "Security & Guardrails", "type": "practice", "tools": ["prompt injection", "red-teaming"], "objectives": ["Identify prompt injection risks", "Apply input and output guardrails", "Harden API integrations"] }
+      ]
+    },
+    {
+      "name": "Capstone",
+      "days": [
+        { "day": 29, "title": "Capstone Project", "type": "project", "tools": ["full stack", "Claude"], "objectives": ["Design an end-to-end AI product", "Scope work into milestones", "Deliver a working demo"] },
+        { "day": 30, "title": "Interview Prep", "type": "practice", "tools": ["mock interviews"], "objectives": ["Practice technical storytelling", "Answer AI system design questions", "Articulate trade-offs clearly"] },
+        { "day": 31, "title": "Deployment & Demo", "type": "project", "tools": ["Render", "Vercel", "monitoring"], "objectives": ["Deploy backend and frontend", "Run a live demo smoothly", "Document architecture and decisions"] }
+      ]
+    }
+  ]
+}
