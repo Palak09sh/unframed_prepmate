@@ -6,10 +6,15 @@ import Hero from '../components/landing/Hero'
 import HowItWorks from '../components/landing/HowItWorks'
 import Navbar from '../components/landing/Navbar'
 
-export default function Landing({ onStart }: { onStart: () => void }) {
+interface LandingProps {
+  onStart: () => void
+  onDashboard: () => void
+}
+
+export default function Landing({ onStart, onDashboard }: LandingProps) {
   return (
     <div className="flex min-h-dvh flex-col">
-      <Navbar onStart={onStart} />
+      <Navbar onStart={onStart} onDashboard={onDashboard} />
       <main className="flex-1">
         <Hero onStart={onStart} />
         <Features />

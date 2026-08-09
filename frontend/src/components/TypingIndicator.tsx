@@ -3,7 +3,7 @@ export default function TypingIndicator() {
     <div className="flex items-start gap-3">
       <div
         aria-hidden="true"
-        className="flex size-8 shrink-0 items-center justify-center rounded-full border border-rule-strong bg-rust font-display text-sm font-semibold text-paper-raised"
+        className="flex size-8 shrink-0 items-center justify-center bg-accent font-display text-sm font-semibold text-paper-raised"
       >
         Q
       </div>

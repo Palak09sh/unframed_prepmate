@@ -1,21 +1,21 @@
 export default function Cta({ onStart }: { onStart: () => void }) {
   return (
-    <section className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
-      <div className="border-2 border-ink px-6 py-14 text-center sm:px-12">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-rust">
+    <section className="bg-ink text-paper">
+      <div className="flex flex-col items-center px-6 py-20 text-center sm:px-10 sm:py-28">
+        <p className="font-display italic text-accent">
           Your turn
         </p>
-        <h2 className="mx-auto mt-4 max-w-xl font-display text-3xl font-medium leading-tight tracking-tight sm:text-4xl">
+        <h2 className="mt-5 max-w-2xl font-display text-4xl font-medium leading-tight tracking-[-0.02em] sm:text-5xl">
           Ready to see how you&apos;d do?
         </h2>
-        <p className="mx-auto mt-5 max-w-md text-ink-muted">
+        <p className="mt-6 max-w-md leading-relaxed text-paper/70">
           Start a practice interview now and get personalized, structured
           feedback in minutes.
         </p>
         <button
           type="button"
           onClick={onStart}
-          className="mt-8 border border-ink bg-ink px-8 py-3.5 text-sm font-medium text-paper transition-colors hover:bg-rust hover:border-rust"
+          className="mt-9 bg-accent px-6 py-2.5 text-sm font-medium text-paper-raised transition-colors hover:bg-accent-deep"
         >
           Start your interview
         </button>

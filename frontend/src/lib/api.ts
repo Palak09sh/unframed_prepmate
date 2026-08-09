@@ -4,12 +4,14 @@ import type {
 } from './types'
 
 /**
- * Real backend client. Hits POST {VITE_API_URL}/api/interview per the shared
- * contract. Used in Milestone 2; Milestone 1 runs against the mock client.
+ * Live backend client. POSTs to {VITE_API_URL}/api/interview per the shared
+ * contract (docs/00_SHARED_CONTEXT.md). The backend defaults to port 8080
+ * locally (application.yml: ${PORT:8080}); override with VITE_API_URL when
+ * deployed. Non-2xx responses carry {"error": "..."} — surface that message.
  */
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
 
-export async function postInterview(
+export async function sendInterviewRequestReal(
   body: InterviewRequest,
 ): Promise<InterviewResponse> {
   const res = await fetch(`${API_URL}/api/interview`, {
@@ -21,11 +23,17 @@ export async function postInterview(
   if (!res.ok) {
     let detail = ''
     try {
-      detail = (await res.text()).slice(0, 200)
+      const text = await res.text()
+      try {
+        const parsed = JSON.parse(text)
+        if (parsed && typeof parsed.error === 'string') detail = parsed.error
+      } catch {
+        detail = text.slice(0, 200)
+      }
     } catch {
-      // ignore body parse errors
+      // body unreadable — fall back to the status code only
     }
-    throw new Error(`Interview request failed (${res.status})${detail ? `: ${detail}` : ''}`)
+    throw new Error(`Interview failed (${res.status})${detail ? `: ${detail}` : ''}`)
   }
 
   return (await res.json()) as InterviewResponse
